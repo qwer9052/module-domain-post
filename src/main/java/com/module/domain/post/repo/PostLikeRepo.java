@@ -1,11 +1,11 @@
-package com.module.domain.board.repo;
+package com.module.domain.post.repo;
 
-import com.module.domain.board.entityrepo.EPostRepo;
+import com.module.domain.post.entityrepo.EPostRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class CommentRepo {
+public class PostLikeRepo {
 
     @Autowired
     EPostRepo ePostRepo;
