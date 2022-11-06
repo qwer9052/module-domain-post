@@ -21,4 +21,8 @@ public interface PostRest {
     @JwtAuth
     Long insertPost(@RequestBody TbPostDto tbPostDto, Long userId);
 
+    @PostMapping("/comment/{postId}/{commentId}")
+    @JwtAuth
+    Long insertPostComment(Long userId, @PathVariable Long postId, @PathVariable Long commentId, @RequestBody TbPostDto tbPostDto);
+
 }
