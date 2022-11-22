@@ -5,6 +5,7 @@ import com.module.db.post.entity.TbComment;
 import com.module.db.post.entity.TbPost;
 import com.module.db.post.model.TbCommentChildrenDto;
 import com.module.db.post.model.TbCommentDto;
+import com.module.db.post.model.TbPostAllDto;
 import com.module.db.post.model.TbPostDto;
 import com.module.db.user.model.QTbUserDto;
 import com.module.db.user.model.TbUserDto;
@@ -41,6 +42,25 @@ public class PostRepo implements QPostRepo {
     public List<TbPost> findAllPost() {
         List<TbPost> posts = ePostRepo.findPost();
         return posts;
+    }
+
+    public Optional<List<TbPostAllDto>> findAllPostBySearch(String search) {
+        Optional<List<TbPostAllDto>> postRes = Optional.ofNullable(jpaQueryFactory
+                .select(Projections.bean(TbPostAllDto.class,
+                        tbPost.postId,
+                        tbPost.postType,
+                        tbPost.creDt,
+                        tbPost.del,
+                        Projections.fields(TbUserDto.class,
+                                tbPost.tbUser.name,
+                                tbPost.tbUser.userId).as("tbUser"),
+                        tbPost.title,
+                        tbPost.content))
+                .from(tbPost)
+                .innerJoin(tbPost.tbUser, tbUser)
+                        .where(tbPost.title.contains(search))
+                .fetch());
+        return postRes;
     }
 
     public TbPost findPost(Long postId) {

@@ -2,6 +2,7 @@ package com.module.domain.post.rest;
 
 import com.module.core.annotation.JwtAuth;
 import com.module.db.post.model.TbCommentDto;
+import com.module.db.post.model.TbPostAllDto;
 import com.module.db.post.model.TbPostDto;
 import org.springframework.web.bind.annotation.*;
 
@@ -10,9 +11,9 @@ import java.util.List;
 @RequestMapping("/v1/post")
 public interface PostRest {
 
-    @GetMapping("/all")
+    @GetMapping
     @JwtAuth
-    List<TbPostDto> findAllPost(Long userId);
+    List<TbPostAllDto> findAllPostBySearch(Long userId, String search);
 
     @GetMapping("/{postId}")
     @JwtAuth
